@@ -1,5 +1,12 @@
 from django.shortcuts import render
+from simpleblog.accounts.forms import UserRegistrationForm
 
 
 def signup(request):
-    return render(request, 'accounts/signup.html')
+    form = UserRegistrationForm()
+
+    context = {
+        'form': form
+    }
+
+    return render(request, 'accounts/signup.html', context)
