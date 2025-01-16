@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.urls import reverse
 from http import HTTPStatus
 from django.contrib.auth.forms import UserCreationForm
-
+from django.contrib.auth import get_user_model
 from simpleblog.accounts.forms import UserRegistrationForm
 
 class AccountCreationTest(TestCase):
@@ -33,4 +33,23 @@ class AccountCreationTest(TestCase):
         }
 
         form = self.form_class(**sample_data)
-        self.assertTrue(form.is_valid, )
+        self.assertTrue(form.is_valid)
+
+    def test_signup_form_creates_user_id_db(self):
+        user = {
+            'email': 'testuser1@app.com',
+            'username': 'testuser1',
+            'password1': 'p4ssword123###',
+            'password2': 'p4ssword123###',
+        }
+
+        form = self.form_class(user)
+
+        User = get_user_model()
+
+        if form.is_valid():
+            form.save()
+        
+        self.assertEqual(User.objects.count(), 1)
+        
+
