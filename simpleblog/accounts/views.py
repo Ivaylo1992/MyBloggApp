@@ -2,7 +2,7 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 from simpleblog.accounts.forms import UserRegistrationForm
 from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 
 def signup(request):
     form = UserRegistrationForm()
@@ -46,3 +46,8 @@ def login(request):
     }
 
     return render(request, 'accounts/login.html', context)
+
+
+def logout(request):
+    auth_logout(request)
+    return redirect(reverse('homepage'))
