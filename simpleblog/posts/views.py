@@ -1,5 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
+from django.urls import reverse
 
+from simpleblog.posts.forms import PostCreationForm
 from simpleblog.posts.models import Post
 
 
@@ -19,3 +21,23 @@ def post_detail(request, post_id):
     }
 
     return render(request, "posts/detail.html", context)
+
+
+def create_post(request):
+    form = PostCreationForm()
+
+
+    if request.method == 'POST':
+        form = PostCreationForm(request.POST)
+        
+        if form.is_valid():
+            form.instance.author = request.user
+            form.save()
+
+            return redirect(reverse('homepage'))
+        
+    context = {
+        'form': form
+    }
+
+    return render(request, 'posts/create_post.html', context)
