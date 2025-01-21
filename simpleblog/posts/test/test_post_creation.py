@@ -19,7 +19,14 @@ class PostCreationTest(TestCase):
         self.title = 'Sample Title'
         self.content = 'Sample body for this sample post'
 
+        UserModel.objects.create_user(
+            username='Test User',
+            email='test@email.com',
+            password='testpassword123##' 
+        )
+
     def test_post_creation_page_exists(self):
+        self.client.login(username='Test User', password='testpassword123##')
         response = self.client.get(self.url)
 
         self.assertEqual(response.status_code, HTTPStatus.OK)
@@ -52,3 +59,9 @@ class PostCreationTest(TestCase):
         post_obj.save()
 
         self.assertEqual(Post.objects.count(), 1)
+
+    def test_post_creation_requires_login(self):
+        response = self.client.get(self.url)
+
+        self.assertEqual(response.status_code, HTTPStatus.FOUND)
+        self.assertRedirects(response, expected_url='/accounts/login/?next=/posts/create/')

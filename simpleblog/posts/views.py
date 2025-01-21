@@ -1,5 +1,6 @@
 from django.shortcuts import redirect, render
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 
 from simpleblog.posts.forms import PostCreationForm
 from simpleblog.posts.models import Post
@@ -22,7 +23,7 @@ def post_detail(request, post_id):
 
     return render(request, "posts/detail.html", context)
 
-
+@login_required
 def create_post(request):
     form = PostCreationForm()
 
