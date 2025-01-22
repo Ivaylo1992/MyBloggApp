@@ -17,6 +17,7 @@ class Profile(models.Model):
     user = models.OneToOneField(
         to=UserModel,
         on_delete=models.CASCADE,
+        related_name='profile'
     )
 
     def __str__(self):
