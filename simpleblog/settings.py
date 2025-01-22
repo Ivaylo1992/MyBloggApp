@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 PROJECT_APPS = [
     'simpleblog.posts.apps.PostsConfig',
     'simpleblog.accounts.apps.AccountsConfig',
+    'simpleblog.home.apps.HomeConfig',
 ]
 
 INSTALLED_APPS = [

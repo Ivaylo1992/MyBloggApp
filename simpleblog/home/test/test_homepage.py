@@ -13,7 +13,7 @@ class HomePageTest(TestCase):
     def test_homepage_returns_correct_response(self):
         response = self.client.get(reverse('homepage'))
 
-        self.assertTemplateUsed(response, "posts/index.html",)
+        self.assertTemplateUsed(response, "home/index.html",)
         self.assertEqual(response.status_code, HTTPStatus.OK)
 
     def test_homepage_returns_post_list(self):
